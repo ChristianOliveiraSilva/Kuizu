@@ -2,7 +2,7 @@
   "name": "kuizu",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "game": "vite --port 80",
     "build": "vite build",
     "preview": "vite preview --port 5050"
   },

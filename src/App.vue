@@ -3,68 +3,40 @@
 </script>
 
 <template>
+  <header>
+    Kuizu - Quiz
+  </header>
+  <section>
 
+  </section>
+  <footer>
+    Feito por Christian de Oliveira Silva
+  </footer>
 </template>
 
 <style>
-@import './assets/base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
-}
-
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-}
 
-@media (min-width: 1024px) {
   body {
-    display: flex;
-    place-items: center;
+    background: linear-gradient(to bottom right, #1d8864 0%, #00cc66 100%);
+    font-family: Arial;
+    color: white;
   }
 
   #app {
+    height: 100vh;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
+    grid-template-rows: auto 1fr auto;
+    padding: 25px;
   }
 
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  #app > header,
+  #app > footer {
+    font-weight: bold;
+    font-size: 25px;
   }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-}
 </style>
