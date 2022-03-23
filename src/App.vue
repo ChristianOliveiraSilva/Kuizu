@@ -1,5 +1,13 @@
-<script>
-  const points = 0;
+<script setup>
+  import QuestionManager from "./components/QuestionManager.vue";
+  import { ref } from 'vue'
+
+  const points = ref(0)
+
+  function addPoints(value) {
+    points.value += value
+  }
+
 </script>
 
 <template>
@@ -12,7 +20,7 @@
     </div>
   </header>
   <section>
-
+    <QuestionManager :addPoints="addPoints" />
   </section>
   <footer>
     <h3 class="title">Feito por Christian de Oliveira Silva</h3>
