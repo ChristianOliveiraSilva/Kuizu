@@ -1,20 +1,27 @@
 <script>
-
+  const points = 0;
 </script>
 
 <template>
   <header>
-    Kuizu - Quiz
+    <h3 class="title">Kuizu - Quiz |</h3>
+    <a class="active" href="">Jogo</a>
+    <a href="">Como jogar?</a>
+    <div style="flex-grow: 1; text-align: right;">
+      Pontuação: {{points}}
+    </div>
   </header>
   <section>
 
   </section>
   <footer>
-    Feito por Christian de Oliveira Silva
+    <h3 class="title">Feito por Christian de Oliveira Silva</h3>
   </footer>
 </template>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
   * {
     margin: 0;
     padding: 0;
@@ -22,21 +29,44 @@
   }
 
   body {
-    background: linear-gradient(to bottom right, #1d8864 0%, #00cc66 100%);
-    font-family: Arial;
-    color: white;
+    background-color: #eee;
+    color: #444;
+  }
+
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+
+  a.active {
+    color: dodgerblue;
   }
 
   #app {
-    height: 100vh;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 70vh auto;
     padding: 25px;
+    font-family: 'Titillium Web', sans-serif;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 25px;
   }
 
   #app > header,
   #app > footer {
-    font-weight: bold;
-    font-size: 25px;
+    padding: 20px 12px;
+  }
+
+  #app > header {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+  }
+  
+  #app > section {
+    border: 1px solid #aaa;
+    box-shadow: 4px 4px 4px #aaa;
   }
 </style>
