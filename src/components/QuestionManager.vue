@@ -8,6 +8,7 @@
 
     const { addPoints } = defineProps(['addPoints'])
 
+    const result = ref(null)
     const questionNumber = ref(0)
     const question = ref(null)
     const mode = ref(null)
@@ -15,6 +16,14 @@
     const changeMode = function(newMode) {
         mode.value = newMode
         question.value = getQuestion()
+    }
+
+    const showResult = function(isSuccess) {
+        result.value = isSuccess
+
+        setTimeout(() => {
+            result.value = null
+        }, 1000);
     }
 
     const getQuestion = () => {
@@ -41,12 +50,14 @@
     const choose = (value) => {
         if (value == question.value.correct) {
             addPoints(question.value.points)
+            showResult(true)
         } else {
-            alert('você errou!')
+            showResult(false)
         }
 
         question.value = getQuestion()
     }
+
 </script>
 
 <template>
@@ -54,6 +65,12 @@
         <div class="mode easy-hover" @click="changeMode(0)">Fácil</div>
         <div class="mode medium-hover" @click="changeMode(1)">Médio</div>
         <div class="mode hard-hover" @click="changeMode(2)">Díficil</div>
+    </div>
+    <div v-else-if="result === true" class="flex-fluid-container easy-hover">
+        certa resposta
+    </div>
+    <div v-else-if="result === false" class="flex-fluid-container hard-hover">
+        Erroooooouuuuuu
     </div>
     <div v-else class="question-container">
         <Question :question="question" :mode="mode" :choose="choose" :questionNumber="questionNumber" />
@@ -65,6 +82,13 @@
         --easy-color: #009933;
         --medium-color: #ffb833;
         --hard-color: #b30000;
+    }
+
+    .flex-fluid-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
     }
 
     .flex-container {

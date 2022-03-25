@@ -10,8 +10,6 @@
         shouldShowTip.value = true
     }
 
-
-
     const getMode = computed(() => {
         return ['fácil', 'médio', 'díficil'][mode] || 'Erro...🙄'
     })
