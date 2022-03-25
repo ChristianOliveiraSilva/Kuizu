@@ -1,6 +1,6 @@
 <script setup>
     import Question from "./Question.vue";
-    import { ref, computed } from 'vue'
+    import { ref } from 'vue'
 
     import { questions as easyQuestions} from "../questions/easy/question"
     import { questions as mediumQuestions} from "../questions/medium/question"
@@ -14,11 +14,12 @@
 
     const changeMode = function(newMode) {
         mode.value = newMode
-        question.value = currentQuestion()
+        question.value = getQuestion()
     }
 
-    const currentQuestion = () => {
+    const getQuestion = () => {
         let questions = [];
+        questionNumber.value++
 
         switch (mode.value) {
             case 0:
@@ -32,7 +33,6 @@
                 break;
             default:
                 throw new Error('Bug')
-                break;
         }
         
         return questions[Math.floor(Math.random() * questions.length)]
@@ -45,7 +45,7 @@
             alert('você errou!')
         }
 
-        question.value = currentQuestion()
+        question.value = getQuestion()
     }
 </script>
 
@@ -55,8 +55,8 @@
         <div class="mode medium-hover" @click="changeMode(1)">Médio</div>
         <div class="mode hard-hover" @click="changeMode(2)">Díficil</div>
     </div>
-    <div v-else class="">
-        <Question :question="question" :mode="mode" :choose="choose" />
+    <div v-else class="question-container">
+        <Question :question="question" :mode="mode" :choose="choose" :questionNumber="questionNumber" />
     </div>
 </template>
 
@@ -95,6 +95,18 @@
     .hard-hover:hover {
         background-color: var(--hard-color);
         color: white;
+    }
+
+    .easy-color {
+        color: var(--easy-color);
+    }
+
+    .medium-color {
+        color: var(--medium-color);
+    }
+
+    .hard-color {
+        color: var(--hard-color);
     }
 
 
