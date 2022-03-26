@@ -1,7 +1,7 @@
 <script setup>
     import { ref, computed } from 'vue'
 
-    const { question, mode, choose, questionNumber } = defineProps(['question', 'mode', 'choose', 'questionNumber'])
+    const { question, mode, chooseAnswer, questionNumber } = defineProps(['question', 'mode', 'chooseAnswer', 'questionNumber'])
 
 
     const shouldShowTip = ref(false)
@@ -34,7 +34,7 @@
         </div>
     </header>
     <section class="option-container">
-        <div class="option" v-for="(options, index) in question.options" :key="index" @click="choose(index)">
+        <div class="option" v-for="(options, index) in question.options" :key="index" @click="chooseAnswer(index)">
             {{getLetter(index)}} {{options}}
         </div>
     </section>

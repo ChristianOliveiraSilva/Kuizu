@@ -1,80 +1,71 @@
 <script setup>
     import Question from "./Question.vue";
+    import QuestionUtils from "./QuestionUtils";
+
+    import ModeEnum from "./Enums/ModeEnum";
+    import ScreenEnum from "././Enums/ScreenEnum";
+
     import { ref } from 'vue'
 
-    import { questions as easyQuestions} from "../questions/easy/question"
-    import { questions as mediumQuestions} from "../questions/medium/question"
-    import { questions as hardQuestions} from "../questions/hard/question"
+    const { addPoints, points } = defineProps(['addPoints', 'points'])
 
-    const { addPoints } = defineProps(['addPoints'])
+    const screen = ref(ScreenEnum.chooseMode)
+    const questionUtils = new QuestionUtils()
 
-    const result = ref(null)
-    const questionNumber = ref(0)
-    const question = ref(null)
-    const mode = ref(null)
+    const changeMode = function(difficulty) {
+        questionUtils.defineQuestionsByDifficulty(difficulty)
+        questionUtils.defineCurrentQuestion()
 
-    const changeMode = function(newMode) {
-        mode.value = newMode
-        question.value = getQuestion()
+        screen.value = ScreenEnum.question
     }
 
     const showResult = function(isSuccess) {
-        result.value = isSuccess
+        screen.value = isSuccess ? ScreenEnum.success : ScreenEnum.error
 
         setTimeout(() => {
-            result.value = null
+            if (questionUtils.hasGameYet()) {
+                questionUtils.defineCurrentQuestion()
+                screen.value = ScreenEnum.question
+            } else {
+                finishGame()
+            }
         }, 1000);
     }
 
-    const getQuestion = () => {
-        let questions = [];
-        questionNumber.value++
-
-        switch (mode.value) {
-            case 0:
-                questions = easyQuestions
-                break;
-            case 1:
-                questions = mediumQuestions
-                break;
-            case 2:
-                questions = hardQuestions
-                break;
-            default:
-                throw new Error('Bug')
-        }
-        
-        return questions[Math.floor(Math.random() * questions.length)]
+    const finishGame = function () {
+        screen.value = ScreenEnum.finish
     }
 
-    const choose = (value) => {
-        if (value == question.value.correct) {
-            addPoints(question.value.points)
+    const chooseAnswer = (value) => {
+        if (value == questionUtils.getQuestion().correct) {
+            addPoints(questionUtils.getQuestion().points)
             showResult(true)
         } else {
             showResult(false)
         }
-
-        question.value = getQuestion()
     }
 
 </script>
 
 <template>
-    <div v-if="mode === null" class="flex-container">
-        <div class="mode easy-hover" @click="changeMode(0)">Fácil</div>
-        <div class="mode medium-hover" @click="changeMode(1)">Médio</div>
-        <div class="mode hard-hover" @click="changeMode(2)">Díficil</div>
+    <div v-if="screen === ScreenEnum.finish" class="flex-container">
+        <p>Acabou! Voce fez: {{points}}</p>
     </div>
-    <div v-else-if="result === true" class="flex-fluid-container easy-hover">
+    <div v-else-if="screen === ScreenEnum.chooseMode" class="flex-container">
+        <div class="mode easy-hover" @click="changeMode(ModeEnum.easy)">Fácil</div>
+        <div class="mode medium-hover" @click="changeMode(ModeEnum.medium)">Médio</div>
+        <div class="mode hard-hover" @click="changeMode(ModeEnum.hard)">Díficil</div>
+    </div>
+    <div v-else-if="screen === ScreenEnum.success" class="flex-fluid-container easy-hover">
         certa resposta
     </div>
-    <div v-else-if="result === false" class="flex-fluid-container hard-hover">
+    <div v-else-if="screen === ScreenEnum.error" class="flex-fluid-container hard-hover">
         Erroooooouuuuuu
     </div>
-    <div v-else class="question-container">
-        <Question :question="question" :mode="mode" :choose="choose" :questionNumber="questionNumber" />
+    <div v-else-if="screen === ScreenEnum.question" class="question-container">
+        <Question :question="questionUtils.getQuestion()" :mode="questionUtils.getMode()" :chooseAnswer="chooseAnswer" :questionNumber="questionUtils.getQuestionNumber()" />
     </div>
+    <div v-else>Opsss... Alguma coisa aconteceu de estranho</div>
 </template>
 
 <style>

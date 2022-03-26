@@ -20,7 +20,7 @@
     </div>
   </header>
   <section>
-    <QuestionManager :addPoints="addPoints" />
+    <QuestionManager :addPoints="addPoints" :points="points" />
   </section>
   <footer>
     <h3 class="title">Feito por Christian de Oliveira Silva</h3>
