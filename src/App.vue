@@ -12,9 +12,7 @@
 
 <template>
   <header>
-    <h3 class="title">Kuizu - Quiz |</h3>
-    <a class="active" href="">Jogo</a>
-    <a href="">Como jogar?</a>
+    <h3 class="title">Kuizu - Quiz</h3>
     <div style="flex-grow: 1; text-align: right;">
       Pontuação: {{points}}
     </div>
